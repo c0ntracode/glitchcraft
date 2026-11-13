@@ -27,6 +27,10 @@ Each ran the same scripted input three times in fresh processes: unpatched, with
 
 These are not a proof that every code works. They cover each distinct bank-mapping path once or twice, with one code per game. A compare byte can also match by chance (about 1 in 256 per bank scanned); the Sonic "rings" code is a real example, and `references/troubleshooting.md` says how to treat extra matching banks.
 
+## Investigations kept as regression records
+
+`docs/evals/smb-jump-palette.md` records a request first judged impossible and then solved in part (a Mario/Luigi palette that changes on every jump, with a four-code, a two-state and a seven-code result). It separates what was observed from what was inferred and lists what was not tested. The method is regression-tested without game data: `tests/test_repurposed_instructions.py` runs a synthetic ROM through `patch-copy` and a tiny 6502 stepper and diffs RAM patched against unpatched, `tests/test_cli.py` checks that `vet` reports a displaced instruction, and `tests/test_real_roms.py` pins the record's static facts to a real dump. The comparison driver used for the emulator runs is not published; the record gives the scenarios and the observed values.
+
 ## Dumps used
 
 The checks were run on dumps of games the author owns. SHA-1 values are listed so you can tell whether you have the same revision; codes are often written for one revision only.
@@ -40,6 +44,7 @@ The checks were run on dumps of games the author owns. SHA-1 values are listed s
 | `genesis/Micro Machines (USA).md` | `39b25dbfa7a80aebdefc19ac2df4bc75b934bbda` |
 | `nes/Mega Man 2 (USA).nes` | `2290d8d839a303219e9327ea1451c5eea430f53d` |
 | `nes/Super Mario Bros. 3 (USA) (Rev 1).nes` | `6bd518e85eb46a4252af07910f61036e84b020d1` |
+| `nes/smb.nes` (Super Mario Bros., NROM) | `33d23c2f2cfa4c9efec87f7bc1321ce3ce6c89bd` |
 | `snes/EarthBound (USA).sfc` | `d67a8ef36ef616bc39306aa1b486e1bd3047815a` |
 | `snes/smw/Super Mario World (USA).sfc` | `6b47bb75d16514b6a476aa0c73a683a2a4c18765` |
 | `sega8/Sonic the Hedgehog (JUE) (V1.0).gg` | `8923295c96b2e05da0a83a827fd709b033fc7332` |

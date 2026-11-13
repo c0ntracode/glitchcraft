@@ -159,6 +159,10 @@ def cmd_vet(args):
     _need(args, 2, "vet ROM CODE... [--bank N]  (give at least one code)")
     platform, data, _ = _load(args[0])
     report = vet.vet(data, args[1:], bank)
+    grouped = {code.upper() for c in report.combined for code in c.codes}
+
+    def displaced(before):
+        print(f"  displaced: {before} no longer runs; find what reads what it wrote, and compare patched against unpatched play")
     for f in report.findings:
         orig = "?" if f.original is None else _v(platform, f.original)
         print(f"{f.code.upper()}  {_a(platform, f.address)}  {orig} -> {_v(platform, f.new)}")
@@ -167,11 +171,15 @@ def cmd_vet(args):
         print(f"  flags: {', '.join(f.flags) or 'none'}")
         if "compare-mismatch" in f.flags:
             print("  this code will not apply on this dump: its compare byte differs from the ROM byte")
+        if "opcode-class-change" in f.flags and f.code.upper() not in grouped:
+            displaced(f.before)
         if f.target:
             print("  target: " + "; ".join(f.target))
     for c in report.combined:
         print(f"combined {' + '.join(c.codes)} at {_a(platform, c.start_addr)}: {c.before} -> {c.after}")
         print(f"  flags: {', '.join(c.flags) or 'none'}")
+        if "opcode-class-change" in c.flags:
+            displaced(c.before)
         if c.target:
             print("  target: " + "; ".join(c.target))
     if report.findings:

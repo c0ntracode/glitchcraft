@@ -115,6 +115,30 @@ class RealRomTests(unittest.TestCase):
         self.assert_applies(rom, "SLXPLOVS", bank="30")             # infinite lives
         self.assert_applies(rom, "AAVZNULP", bank="8")              # always run
 
+    def test_nes_super_mario_bros_per_jump_palette_investigation(self):
+        """Facts behind docs/evals/smb-jump-palette.md, checked on the real dump (SHA-1 in TESTING.md)."""
+        rom = find("nes/smb.nes")
+        if rom is None:
+            self.skipTest("ROM not present")
+        self.assertIn("sha1: 33d23c2f2cfa4c9efec87f7bc1321ce3ce6c89bd", run("id", rom)[1])
+        inc = ["VVNLLKSE", "KKNLGGLL", "LENLIGGA"]                  # STA $0433 -> INC $03C4 (opcode, low, high byte)
+        others = ["SZVZKYAX", "PEOUTXKY", "AUVAEKZP", "YXVAOGAL", "POVAXGYX"]   # no reset; mask bit 0; Luigi in palette 1
+        for code in inc + others:
+            self.assert_applies(rom, code)
+        _, out, _ = run("vet", rom, *inc)
+        self.assertIn("STA $0433 -> INC $03C4", out)
+        self.assertIn("displaced: STA $0433 no longer runs", out)
+        with open(rom, "rb") as f:
+            data = f.read()
+        at = lambda a, n=1: data[a - 0x8000 + 16:a - 0x8000 + 16 + n]   # noqa: E731
+        self.assertEqual(at(0x85D7, 12).hex(), "221627182230271922372716")   # Mario, Luigi, Fire rows
+        for area in (0x8CA4, 0x8CC8, 0x8CEC, 0x8D10):                   # sprite palettes of each area set
+            sprite = at(area + 3 + 16, 16)
+            self.assertTrue(all(sprite[i + 1:i + 4] != bytes([0x30, 0x27, 0x19]) for i in range(0, 16, 4)), hex(area))
+        self.assertEqual(at(0xAF64, 3).hex(), "209ab2")             # the per-frame JSR to the palette reset
+        callers = [a for a in range(0x8000, 0xFFFD) if at(a, 3) == bytes([0x20, 0xF1, 0x85])]
+        self.assertEqual(callers, [0x85AD, 0x9175, 0xD830, 0xD941])  # nothing on a jump path calls GetPlayerColors
+
     def test_snes_hirom_earthbound_mirrors_agree(self):
         rom = find("snes/EarthBound*.sfc")
         self.assert_applies(rom, "8251-57D6", original="$9D")       # unlimited HP: STA -> LDA at C2:716C

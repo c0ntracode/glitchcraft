@@ -18,6 +18,39 @@ def run(*argv):
     return code, out.getvalue(), err.getvalue()
 
 
+STORE_SITE = {0x9300: "8D 33 04 60"}     # STA $0433 ; RTS
+
+
+class DisplacedInstructionTests(unittest.TestCase):
+    """A patch that swaps an opcode stops the original instruction from running; `vet` must say so."""
+
+    def setUp(self):
+        self.dir = tempfile.TemporaryDirectory()
+        self.addCleanup(self.dir.cleanup)
+        self.rom = os.path.join(self.dir.name, "g.nes")
+        with open(self.rom, "wb") as f:
+            f.write(make_nes(plant={**STORE_SITE, **PRANK_SITE, **LIVES_SITE}))
+
+    def codes(self, *patches):
+        return [codec.encode(Patch(a, v, c)) for a, v, c in patches]
+
+    def test_three_byte_rewrite_reports_one_displaced_note_naming_the_original(self):
+        # STA $0433 -> INC $03C4 takes an opcode byte and both operand bytes
+        codes = self.codes((0x9300, 0xEE, 0x8D), (0x9301, 0xC4, 0x33), (0x9302, 0x03, 0x04))
+        _, out, _ = run("vet", self.rom, *codes)
+        self.assertIn("STA $0433 -> INC $03C4", out)
+        self.assertEqual(out.count("displaced:"), 1, out)
+        self.assertIn("displaced: STA $0433 no longer runs", out)
+
+    def test_a_single_opcode_change_reports_the_displaced_instruction(self):
+        _, out, _ = run("vet", self.rom, "KTGOYX")
+        self.assertIn("displaced: BCC $9264 no longer runs", out)
+
+    def test_a_plain_value_change_reports_nothing_displaced(self):
+        _, out, _ = run("vet", self.rom, "AATOZE")
+        self.assertNotIn("displaced:", out)
+
+
 class CliTests(unittest.TestCase):
     def setUp(self):
         self.dir = tempfile.TemporaryDirectory()

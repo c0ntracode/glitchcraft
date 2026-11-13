@@ -2,7 +2,9 @@
 
 A Claude Code skill that helps you build and check Game Genie codes from a game ROM you own. Give it a ROM and a goal ("infinite lives", "start on World 4"), or a code someone sent you, and it works out what the code really does to the game's bytes.
 
-Status: **NES, SNES, Genesis, Game Boy / Game Boy Color and Game Gear / Master System, early.** The Master System format was verified against emulator sources and SMS Power (Galoob made hardware for the Game Gear only), so its codes are emulator-format codes. A platform is added once its code format is checked against published references and an emulator.
+**Supported platforms:** NES, SNES, Genesis, Game Boy / Game Boy Color, and Game Gear / Master System.
+
+**Status: early.** Each platform's code format is checked against published sources and an emulator, and published codes have been verified on real dumps, but only a few games have been tried per platform. Master System codes are emulator-format: Galoob built Game Genie hardware for the Game Gear only. A platform is added once its format is checked against published references and an emulator.
 
 ## What it does
 

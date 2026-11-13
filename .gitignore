@@ -1,0 +1,18 @@
+# ROMs are bring-your-own and must never be committed
+roms/
+*.nes
+*.sfc
+*.smc
+*.gen
+*.smd
+*.gb
+*.gbc
+*.gg
+*.sms
+
+# Local developer conveniences, not project artifacts
+claude_resume
+
+# Python bytecode
+__pycache__/
+*.pyc

@@ -1,0 +1,26 @@
+{
+  "alphabet": "APZLGITYEOXUKSVN",
+  "six_letter_own_analysis": {
+    "note": "Decoded by our own decoder and checked against smb.nes bytes and fceux behaviour (2026-11-12); descriptions are ours.",
+    "AATOZA": [36970, 0],
+    "IATOZA": [36970, 5],
+    "AATOZE": [36970, 8],
+    "SXIOPO": [37337, 173],
+    "KTGOYX": [37455, 236],
+    "VIIATX": [33366, 222],
+    "OPIAYZ": [33367, 145],
+    "PEAPYA": [36999, 1],
+    "YEAPYA": [36999, 7],
+    "YSAOPE": [37001, 95],
+    "YEAOZA": [37002, 7]
+  },
+  "six_letter_published": {
+    "GOSSIP": {"address": 53725, "value": 20, "source": "https://tuxnes.sourceforge.net/gamegenie.html (also https://archive.nes.science/nesdev-forums/f3/t14573.xhtml)"}
+  },
+  "equivalent_six_letter": [["GOSSIP", "GOISIP"]],
+  "eight_letter_published": {
+    "ZEXPYGLA": {"address": 38055, "value": 2, "compare": 3, "source": "https://tuxnes.sourceforge.net/gamegenie.html"},
+    "YEUZUGAA": {"address": 44211, "value": 7, "compare": 0, "source": "https://github.com/qalle2/nes-util (nesgenie_dec.py README)"},
+    "ENEOOGEZ": {"address": 40073, "value": 240, "compare": 160, "source": "https://fractal161.github.io/blog/so-many-gg-codes"}
+  }
+}

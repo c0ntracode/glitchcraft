@@ -1,0 +1,23 @@
+{
+ "source": "published codes (Sonic Retro via search snippet, unfetched) hand-decoded from references/sega8.md; effects unverified",
+ "hand_decoded": [
+  {
+   "code": "3A6-24E-2A2",
+   "address": 5668,
+   "value": 58,
+   "compare": 50
+  },
+  {
+   "code": "008-3BD-E6E",
+   "address": 10299,
+   "value": 0,
+   "compare": 1
+  },
+  {
+   "code": "2A2-86A-6E2",
+   "address": 21126,
+   "value": 42,
+   "compare": 34
+  }
+ ]
+}

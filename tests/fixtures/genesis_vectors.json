@@ -1,0 +1,58 @@
+{
+ "provenance": "Layout from the documentation comment in dgen's decode.c (cited in references/genesis.md, not copied). 'published' is the example in that comment. 'public_list' codes come from Sonic 1 code lists agreed by several sources; they target the clean REV00 build, so the instruction at their address in the author's REV01 [h3C] dump does not match their description, as expected. 'rom_derived' patches were chosen from real instructions in that dump (SHA-1 1f1e480f768237eb0c0e725b622b0d791f47a7a9) and encoded by the throwaway port used to write this file; the independent letter check is docs/evals/genesis-letters.md.",
+ "published": [
+  {
+   "code": "SCRA-MBLE",
+   "address": 367684,
+   "value": 45176
+  }
+ ],
+ "public_list": [
+  {
+   "code": "GJ6A-CA7A",
+   "address": 80032,
+   "value": 24626,
+   "note": "Sonic 1 infinite lives"
+  },
+  {
+   "code": "JXGA-CA7G",
+   "address": 117926,
+   "value": 24644,
+   "note": "Sonic 1 player 2 infinite lives"
+  },
+  {
+   "code": "AE3T-AACL",
+   "address": 13130,
+   "value": 1,
+   "note": "Sonic 1 start with 1 life"
+  },
+  {
+   "code": "AY3T-AACL",
+   "address": 13130,
+   "value": 5,
+   "note": "Sonic 1 start with 5 lives"
+  },
+  {
+   "code": "AJ3A-AA4G",
+   "address": 12870,
+   "value": 24578,
+   "note": "Sonic 1 level select"
+  }
+ ],
+ "rom_derived": [
+  {
+   "code": "AJ9T-CA5Y",
+   "address": 81780,
+   "value": 24578,
+   "rom_original": 21304,
+   "note": "replace SUBQ.B #1,($FE12).w (life lost, 4 bytes) with BRA.S +2 so its extension word is skipped; a 2-byte NOP would leave FE12 to be executed"
+  },
+  {
+   "code": "AY3T-AAAJ",
+   "address": 13064,
+   "value": 5,
+   "rom_original": 3,
+   "note": "start with 5 lives: immediate of MOVE.B #3,($FE12).w"
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+{
+  "source": "hand-decoded from references/gb.md; not yet run against an emulator",
+  "hand_decoded": [
+    {"code": "010-03F-E6A", "address": 3, "value": 1, "compare": 0},
+    {"code": "00C-4BE-3BE", "address": 7243, "value": 0, "compare": 53},
+    {"code": "00C-4BE", "address": 7243, "value": 0, "compare": null}
+  ]
+}

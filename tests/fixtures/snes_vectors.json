@@ -1,0 +1,61 @@
+{
+ "provenance": "Decoded by this project's own port of the algorithm described in references/snes.md, then checked by hand against the instruction at the decoded address in Super Mario World (USA), SHA-1 6b47bb75d16514b6a476aa0c73a683a2a4c18765. Codes come from a public list; descriptions are ours. The independent letter check is the manual snes9x run in docs/evals/snes-letters.md.",
+ "vectors": [
+  {
+   "code": "C222-D4DD",
+   "address": 53464,
+   "value": 173,
+   "rom_original": 206,
+   "note": "stops the life decrement (DEC becomes LDA)"
+  },
+  {
+   "code": "D322-D4DD",
+   "address": 53464,
+   "value": 14,
+   "rom_original": 206,
+   "note": "changes the same life-decrement opcode to another instruction"
+  },
+  {
+   "code": "14B4-6F07",
+   "address": 40485,
+   "value": 98,
+   "rom_original": 4,
+   "note": "changes the starting-lives immediate to $62"
+  },
+  {
+   "code": "DF64-A7D7",
+   "address": 36652,
+   "value": 1,
+   "rom_original": 100,
+   "note": "changes the coin-limit compare immediate to $01"
+  },
+  {
+   "code": "C264-64D7",
+   "address": 36392,
+   "value": 173,
+   "rom_original": 206,
+   "note": "turns the timer decrement into a load"
+  },
+  {
+   "code": "DD32-6DAD",
+   "address": 58067,
+   "value": 0,
+   "rom_original": 64,
+   "note": "changes one byte in the player-hit path"
+  },
+  {
+   "code": "CBC4-6DAD",
+   "address": 41507,
+   "value": 169,
+   "rom_original": 20,
+   "note": "changes a load immediate near the Start-button check"
+  },
+  {
+   "code": "7464-A7D7",
+   "address": 36652,
+   "value": 50,
+   "rom_original": 100,
+   "note": "changes the coin-limit compare immediate (50 coins)"
+  }
+ ]
+}
